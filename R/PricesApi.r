@@ -1,4 +1,4 @@
-# Stocks
+# Cryptos
 #
 # <h3>Authentication</h3>                     You need to authenticate to use this API.                     To authenticate click on the \"Authorize\" button and do one of the following steps.<br />                     1. Send your API key in the headers of the request by typing \"Bearer my-key\" on the Bearer authorization scheme.<br />                     2. Send your API key on the \"ApiKey\" query string parameter. To do this type your API key in the Query String authorization scheme.<br />                     Both methods are equally valid. We offer both options so that you can use the method that is easier to use in your application.<br />                     <br />                     <h3>API limits</h3>                     Your API key may be subject to daily/hourly limits. To know how much requests you have left look at the following headers in the response.<br />                     1. <strong>x-ratelimit-limit</strong> - The total number of requests that you are allowed to make in a given period (hour/day)                       2. <strong>x-ratelimit-remaining</strong> - The number of remaining requests that you can perform in the current period.<br />                     3. <strong>x-ratelimit-reset</strong> - The number of seconds until the current period resets.<br />                     <br />                     <h3>Suggestions</h3>                     You don't need to implement the whole API by hand in your programming language of choice.<br />                     Since this API has an OpenAPI specification you can use                      <a href=\"https://github.com/swagger-api/swagger-codegen\" target=\"_blank\">Swagger Generator</a>                      to automatically generate client stubs for more than 30 programming languages.                     <br />                     <br />                     You don't have an API key? <a href=\"https://www.equibles.com/api/pricing\" target=\"_blank\">Get one for free here.</a>
 #
@@ -17,10 +17,10 @@
 #' @section Methods:
 #' \describe{
 #'
-#' end_of_day Lists the end of day prices for a given stock.
+#' end_of_day Lists the end of day prices for a given cryptocurrency.
 #'
 #'
-#' intraday Lists the intraday prices for a given stock with one minute precision.
+#' intraday Lists the intraday prices for a given cryptocurrency with one minute precision.
 #'
 #' }
 #'
@@ -38,13 +38,13 @@ PricesApi <- R6::R6Class(
         self$apiClient <- ApiClient$new()
       }
     },
-    end_of_day = function(full_ticker, start_time, end_time, page, page_size, ...){
+    end_of_day = function(ticker, start_time, end_time, page, page_size, ...){
       args <- list(...)
       queryParams <- list()
       headerParams <- character()
 
-      if (!missing(`full_ticker`)) {
-        queryParams['fullTicker'] <- full_ticker
+      if (!missing(`ticker`)) {
+        queryParams['ticker'] <- ticker
       }
 
       if (!missing(`start_time`)) {
@@ -63,7 +63,7 @@ PricesApi <- R6::R6Class(
         queryParams['pageSize'] <- page_size
       }
 
-      urlPath <- "/stocks/prices/endofday"
+      urlPath <- "/cryptos/prices/endofday"
       resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,
@@ -82,13 +82,13 @@ PricesApi <- R6::R6Class(
       }
 
     }
-    intraday = function(full_ticker, start_time, end_time, page, page_size, ...){
+    intraday = function(ticker, start_time, end_time, page, page_size, ...){
       args <- list(...)
       queryParams <- list()
       headerParams <- character()
 
-      if (!missing(`full_ticker`)) {
-        queryParams['fullTicker'] <- full_ticker
+      if (!missing(`ticker`)) {
+        queryParams['ticker'] <- ticker
       }
 
       if (!missing(`start_time`)) {
@@ -107,7 +107,7 @@ PricesApi <- R6::R6Class(
         queryParams['pageSize'] <- page_size
       }
 
-      urlPath <- "/stocks/prices/intraday"
+      urlPath <- "/cryptos/prices/intraday"
       resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,

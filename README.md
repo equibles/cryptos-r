@@ -1,4 +1,4 @@
-# Equibles Stocks API for R
+# Equibles Cryptos API for R
 
 ## Installation
 You'll need the `devtools` package in order to build the API.
